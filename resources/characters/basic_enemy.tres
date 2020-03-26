@@ -1,0 +1,78 @@
+[gd_resource type="Resource" load_steps=15 format=2]
+
+[ext_resource path="res://resources/templates/character_template.gd" type="Script" id=1]
+[ext_resource path="res://assets/animations/mon1_sprite.png" type="Texture" id=2]
+[ext_resource path="res://resources/templates/character_stats.gd" type="Script" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 50, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 100, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 150, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 200, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 50, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 50, 50, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 100, 50, 50, 50 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "attack",
+"speed": 5.0
+} ]
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 3 )
+health = 100.0
+damage = 10.0
+vision_range = 0.0
+attack_extent = 25.0
+movement_speed = 50.0
+attack_cooldown = 1.0
+spawn_cooldown = 1.0
+
+[resource]
+script = ExtResource( 1 )
+thumbnail = SubResource( 3 )
+name = "Basic Enemy"
+description = "He's just a basic enemy"
+stats = SubResource( 11 )
+animation_frames = SubResource( 10 )
+is_enemy = true

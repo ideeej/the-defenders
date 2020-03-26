@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scripts/ui/Button.gd" type="Script" id=1]
+[ext_resource path="res://resources/characters/basic_enemy.tres" type="Resource" id=2]
+[ext_resource path="res://resources/characters/basic_character.tres" type="Resource" id=3]
+[ext_resource path="res://assets/animations/mon1_sprite.png" type="Texture" id=4]
+[ext_resource path="res://assets/animations/cat_fighter_sprite2.png" type="Texture" id=5]
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 50, 50 )
+
+[node name="Control" type="Control"]
+margin_right = 1024.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 95.0
+scroll_vertical_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+margin_right = 128.0
+margin_bottom = 56.0
+
+[node name="Button" type="Button" parent="ScrollContainer/HBoxContainer"]
+margin_right = 62.0
+margin_bottom = 56.0
+icon = SubResource( 6 )
+script = ExtResource( 1 )
+template = ExtResource( 2 )
+
+[node name="Button2" type="Button" parent="ScrollContainer/HBoxContainer"]
+margin_left = 66.0
+margin_right = 128.0
+margin_bottom = 56.0
+icon = SubResource( 12 )
+script = ExtResource( 1 )
+template = ExtResource( 3 )
