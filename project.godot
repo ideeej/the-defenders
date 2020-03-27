@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="First Game"
-run/main_scene="res://template_scenes/character_creation.tscn"
+run/main_scene="res://scenes/character_selection.tscn"
 config/icon="res://icon.png"
 
 [autoload]
