@@ -26,8 +26,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="First Game"
-run/main_scene="res://scenes/character_selection.tscn"
+config/name="the-defenders"
+run/main_scene="res://scenes/gameplay.tscn"
 config/icon="res://icon.png"
 
 [autoload]

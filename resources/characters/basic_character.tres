@@ -14,27 +14,27 @@ region = Rect2( 250, 0, 50, 50 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
-region = Rect2( 0, 200, 50, 50 )
+region = Rect2( 0, 0, 50, 50 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 3 )
-region = Rect2( 400, 200, 50, 50 )
+region = Rect2( 150, 0, 50, 50 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 3 )
-region = Rect2( 450, 200, 50, 50 )
+region = Rect2( 200, 0, 50, 50 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 50, 50 )
+region = Rect2( 0, 200, 50, 50 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 3 )
-region = Rect2( 150, 0, 50, 50 )
+region = Rect2( 400, 200, 50, 50 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 3 )
-region = Rect2( 200, 0, 50, 50 )
+region = Rect2( 450, 200, 50, 50 )
 
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
@@ -43,26 +43,26 @@ animations = [ {
 "name": "idle",
 "speed": 6.0
 }, {
-"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
-"loop": true,
-"name": "attack",
-"speed": 12.0
-}, {
-"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 7 ) ],
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 4 ) ],
 "loop": true,
 "name": "walk",
 "speed": 6.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "attack",
+"speed": 12.0
 } ]
 
 [sub_resource type="Resource" id=10]
 script = ExtResource( 2 )
 health = 100.0
-damage = 10.0
+damage = 5.0
 vision_range = 96.0
-attack_extent = 64.0
+attack_area = 50.0
 movement_speed = 50.0
-attack_cooldown = 0.5
-spawn_cooldown = 1.0
+attack_cooldown = 0.0
+respawn_cooldown = 0.0
 
 [sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 3 )

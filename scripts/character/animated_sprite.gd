@@ -8,23 +8,23 @@ func _ready():
 
 func setup_animation_direction(template):
 	if !template.is_enemy:
-		flip_h()
+		flip_horizontal()
 
 
 func setup_animation_frames(sprite_frames):
-	frames = sprite_frames
+	self.frames = sprite_frames
 
 
 func set_animation(animation_name):
-	animation = animation_name
+	self.animation = animation_name
 
 
 func set_playing(on):
-	playing = on
+	self.playing = on
 
 
-func flip_h():
-	flip_h = true
+func flip_horizontal():
+	self.flip_h = true
 
 
 func get_frame_width():

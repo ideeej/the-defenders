@@ -50,8 +50,8 @@ func _ready():
 	$vision_area.offset(Vector2(sprite_extents.x/2, 0) + Vector2(stats.vision_range, 0))
 	$vision_area.setup_layers(collider_layers.own, collider_layers.enemy)
 	
-	$attack_area.setup_extents(Vector2(stats.attack_extent, sprite_extents.y))
-	$attack_area.offset(Vector2(sprite_extents.x/2, 0) + Vector2(stats.vision_range*2, 0) + Vector2(stats.attack_extent, 0))
+	$attack_area.setup_extents(Vector2(stats.attack_area, sprite_extents.y))
+	$attack_area.offset(Vector2(sprite_extents.x/2, 0) + Vector2(stats.vision_range*2, 0) + Vector2(stats.attack_area, 0))
 	$attack_area.setup_layers(collider_layers.own, collider_layers.enemy)
 	
 

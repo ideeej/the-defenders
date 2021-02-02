@@ -7,8 +7,8 @@ func _ready():
 
 
 func setup_extents(extents):
-	$vision_collider.shape = RectangleShape2D.new()
-	$vision_collider.shape.extents = extents
+	$collider.shape = RectangleShape2D.new()
+	$collider.shape.extents = extents
 
 
 func offset(_offset):
@@ -26,3 +26,4 @@ func get_enemies():
 
 func has_enemies():
 	return get_enemies().size() > 0
+

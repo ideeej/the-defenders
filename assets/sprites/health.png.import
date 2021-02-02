@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/green_square.png-75581f711691d8762dfed1b2c91308d0.stex"
+path="res://.import/health.png-1f9844b80f3155a5ab236bbe27fde683.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/green_square.png"
-dest_files=[ "res://.import/green_square.png-75581f711691d8762dfed1b2c91308d0.stex" ]
+source_file="res://assets/sprites/health.png"
+dest_files=[ "res://.import/health.png-1f9844b80f3155a5ab236bbe27fde683.stex" ]
 
 [params]
 
