@@ -1,6 +1,6 @@
 extends CollisionShape2D
 
 
-func setup_extents(extents):
-	shape = RectangleShape2D.new()
-	shape.extents = extents
+func setup_extents(width, height):
+	self.shape = RectangleShape2D.new()
+	self.shape.extents = Vector2(width, height)

@@ -71,7 +71,7 @@ func _physics_process(delta):
 
 func on_animation_finished():
 	if $animated_sprites.animation == "attack":
-		attack()
+		print("Attacked!")
 
 
 func update_states():
