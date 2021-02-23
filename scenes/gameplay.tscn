@@ -1,141 +1,15 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://resources/characters/basic_character.tres" type="Resource" id=1]
-[ext_resource path="res://resources/templates/character_template.gd" type="Script" id=2]
-[ext_resource path="res://resources/templates/character_stats.gd" type="Script" id=3]
-[ext_resource path="res://template_scenes/Character_test.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/character/adventurer-Sheet.png" type="Texture" id=5]
-
-[sub_resource type="AtlasTexture" id=66]
-atlas = ExtResource( 5 )
-region = Rect2( 150, 185, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=67]
-atlas = ExtResource( 5 )
-region = Rect2( 200, 185, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=68]
-atlas = ExtResource( 5 )
-region = Rect2( 250, 185, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=69]
-atlas = ExtResource( 5 )
-region = Rect2( 300, 185, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=48]
-atlas = ExtResource( 5 )
-region = Rect2( 150, 185, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=49]
-atlas = ExtResource( 5 )
-region = Rect2( 200, 185, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=50]
-atlas = ExtResource( 5 )
-region = Rect2( 250, 185, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=51]
-atlas = ExtResource( 5 )
-region = Rect2( 300, 185, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=52]
-atlas = ExtResource( 5 )
-region = Rect2( 0, 222, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=53]
-atlas = ExtResource( 5 )
-region = Rect2( 50, 222, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=54]
-atlas = ExtResource( 5 )
-region = Rect2( 100, 222, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=55]
-atlas = ExtResource( 5 )
-region = Rect2( 150, 222, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=56]
-atlas = ExtResource( 5 )
-region = Rect2( 200, 222, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=57]
-atlas = ExtResource( 5 )
-region = Rect2( 250, 222, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=58]
-atlas = ExtResource( 5 )
-region = Rect2( 300, 222, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=59]
-atlas = ExtResource( 5 )
-region = Rect2( 0, 259, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=60]
-atlas = ExtResource( 5 )
-region = Rect2( 50, 37, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=61]
-atlas = ExtResource( 5 )
-region = Rect2( 100, 37, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=62]
-atlas = ExtResource( 5 )
-region = Rect2( 150, 37, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=63]
-atlas = ExtResource( 5 )
-region = Rect2( 200, 37, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=64]
-atlas = ExtResource( 5 )
-region = Rect2( 250, 37, 50, 37 )
-
-[sub_resource type="AtlasTexture" id=65]
-atlas = ExtResource( 5 )
-region = Rect2( 300, 37, 50, 37 )
-
-[sub_resource type="SpriteFrames" id=26]
-animations = [ {
-"frames": [ SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ) ],
-"loop": true,
-"name": "idle",
-"speed": 8.0
-}, {
-"frames": [ SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ) ],
-"loop": false,
-"name": "attack",
-"speed": 8.0
-}, {
-"frames": [ SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ) ],
-"loop": true,
-"name": "walk",
-"speed": 8.0
-} ]
-
-[sub_resource type="Resource" id=10]
-script = ExtResource( 3 )
-health = 100.0
-damage = 49.0
-vision_range = 32.0
-attack_area = 16.0
-movement_speed = 100.0
-attack_cooldown = 4.0
-respawn_cooldown = 0.0
-
-[sub_resource type="Resource" id=43]
-script = ExtResource( 2 )
-name = "Basic Character"
-description = "He's just a basic boy"
-stats = SubResource( 10 )
-animation_frames = SubResource( 26 )
-is_enemy = true
+[ext_resource path="res://template_scenes/Character.tscn" type="PackedScene" id=2]
+[ext_resource path="res://resources/characters/basic_enemy.tres" type="Resource" id=3]
 
 [node name="World" type="Node2D"]
 position = Vector2( 317.839, 720.435 )
 
-[node name="Player" parent="." instance=ExtResource( 4 )]
+[node name="Character" parent="." instance=ExtResource( 2 )]
 character_data = ExtResource( 1 )
 
-[node name="Enemy" parent="." instance=ExtResource( 4 )]
-position = Vector2( 1127.27, -4.23779 )
-character_data = SubResource( 43 )
+[node name="Enemy" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1250, 0 )
+character_data = ExtResource( 3 )

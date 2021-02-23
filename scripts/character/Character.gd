@@ -1,61 +1,58 @@
 extends KinematicBody2D
 
-export(Resource) var template : Resource
 
-var stats : Resource
-var health : float
-var direction : int
+onready var animated_sprite = $animated_sprite
 
-var is_attacking : bool
+export(Resource) var character_data : Resource
 
+var stats : Resource # from character data
 var state : String
 
+var sprite_width : float
+var sprite_height : float
+
+
+# Actual character health
+var health : float
 
 var time : float = 0
 var next_attack_time : float = 0
+var is_attacking: bool = false
+var direction : int
 
 
 func _ready():
-	var layer_manager : Node = get_node("/root/layer_manager")
+	self.stats = character_data.stats
+	self.health = stats.health
 	
-	stats = template.stats
-	health = stats.health
-	
-	if template.is_enemy:
-		direction = 1
+	# Manually setting the character direction here
+	# It's completely fine, but I don't like this
+	if self.character_data.is_enemy:
+		self.direction = -1
 	else:
-		direction = -1
-	
-	$animated_sprites.connect("animation_finished", self, "on_animation_finished")
-	
-	$animated_sprites.setup_animation_direction(template)
-	$animated_sprites.setup_animation_frames(template.animation_frames)
-	$animated_sprites.set_playing(true)
-	$animated_sprites.animation = "idle"
+		self.direction = 1
 	
 	
-	var sprite_extents : Vector2 = Vector2(
-		$animated_sprites.get_frame_width(),
-		$animated_sprites.get_frame_height()
-	)
-	
-	var collider_layers : Dictionary = layer_manager.calculate_layers(template)
-	
+	var collider_layers : Dictionary = layer_manager.calculate_layers(character_data)
 	set_collision_layer(collider_layers.own)
 	set_collision_mask(collider_layers.enemy)
 	
-	$collider.setup_extents(sprite_extents)
 	
-	$vision_area.setup_extents(sprite_extents + Vector2(stats.vision_range, 0))
-	$vision_area.offset(Vector2(sprite_extents.x/2, 0) + Vector2(stats.vision_range, 0))
-	$vision_area.setup_layers(collider_layers.own, collider_layers.enemy)
+	var anim = $animated_sprite.connect("animation_finished", self, "_on_animation_finished")
+	$animated_sprite.initialize(character_data)
 	
-	$attack_area.setup_extents(Vector2(stats.attack_area, sprite_extents.y))
-	$attack_area.offset(Vector2(sprite_extents.x/2, 0) + Vector2(stats.vision_range*2, 0) + Vector2(stats.attack_area, 0))
-	$attack_area.setup_layers(collider_layers.own, collider_layers.enemy)
+	self.sprite_width = $animated_sprite.width
+	self.sprite_height = $animated_sprite.height
+	$collider.setup_extents(self.sprite_width, self.sprite_height)
 	
+	
+	$vision_area.initialize(self.stats.vision_range, collider_layers)
+	$attack_area.initialize(self.stats.attack_area, collider_layers)
 
 
+func _process(delta):
+	pass
+	
 
 
 func _physics_process(delta):
@@ -64,18 +61,72 @@ func _physics_process(delta):
 	else:
 		try_attack()
 	
-	update_states()
-
+	state = $animated_sprite.animation
+	
 	time += delta
 
 
-func on_animation_finished():
-	if $animated_sprites.animation == "attack":
-		print("Attacked!")
+func _on_animation_finished():
+	if $animated_sprite.animation == "attack":
+		attack()
+	
+	if $animated_sprite.animation == "death":
+		queue_free()
 
 
-func update_states():
-	state = $animated_sprites.animation
+func set_animation(anim_name):
+	if !$animated_sprite.frames.has_animation(anim_name):
+		print("I don't Have the %s Animation" % anim_name)
+	
+	$animated_sprite.set_animation(anim_name)
+	
+	return $animated_sprite.frames.has_animation(anim_name)
+
+
+func try_attack():
+	var time_to_attack = time > self.next_attack_time
+	
+	if time_to_attack and !self.is_attacking:
+		set_animation("attack")
+	else:
+		set_animation("idle")
+
+
+func attack():
+	# Still a bit raw, but at some point, attacking will be more complex.
+	# Instead of hardcoding stuff, there will be some stats taking care of it.
+	
+	var enemies = $attack_area.get_enemies()
+	var closest_enemy = get_closest_enemy(enemies)
+	
+	if closest_enemy:
+		closest_enemy.take_damage(self)
+	
+	is_attacking = false
+	next_attack_time = time + stats.attack_cooldown
+
+
+func take_damage(_enemy):
+	self.health -= _enemy.get_damage()
+	
+	if self.health <= 0:
+		self.health = 0
+		set_animation("death")
+		
+		# Fallback, just die, forget about the death animation...
+		var has_death_animation = $animated_sprite.frames.has_animation("death")
+		if !has_death_animation:
+			print("I am dying...")
+			queue_free()
+	
+	
+
+func move(delta):
+	set_animation("walk")
+	
+	var x_velocity = self.get_speed() * direction * delta
+	var velocity : Vector2 = Vector2(x_velocity, 0)
+	translate(velocity)
 
 
 func get_closest_enemy(enemies):
@@ -89,74 +140,28 @@ func get_closest_enemy(enemies):
 			closest_enemy = enemy
 			continue
 		
-		if abs(enemy.position.x - position.x) < abs(closest_enemy.position.x - position.x):
+		var current_diff = enemy.position.x - self.position.x
+		var closest_diff = closest_enemy.position.x - self.position.x
+		
+		if abs(current_diff) < abs(closest_diff):
 			closest_enemy = enemy
 		
 	return closest_enemy
 
 
-func trigger_attack():
-	$animated_sprites.set_animation("attack")
-
-
-func trigger_idle():
-	$animated_sprites.set_animation("idle")
-
-
-func trigger_walk():
-	$animated_sprites.set_animation("walk")
-
-
-func try_attack():
-	if time > next_attack_time:
-		if !is_attacking:
-			trigger_attack()
-	else:
-		trigger_idle()
-
-
-func attack():
-	var enemies = $attack_area.get_enemies()
-	var closest_enemy = get_closest_enemy(enemies)
-	
-	if closest_enemy:
-		closest_enemy.take_damage(self)
-	
-	is_attacking = false
-	next_attack_time = time + stats.attack_cooldown
-
-
-func take_damage(_enemy):
-	health -= _enemy.stats.damage
-	
-	if health <= 0:
-		health = 0
-		queue_free()
-	
-	
-
-func move(delta):
-	trigger_walk()
-	
-	var velocity : Vector2 = Vector2(
-		stats.movement_speed * direction * delta,
-		0
-	)
-	translate(velocity)
-
-
-func get_max_health():
-		return stats.health
+func get_damage():
+	# At least for now...
+	return self.stats.damage
 
 
 func get_health():
-		return health
+	return self.health
 
 
+func get_max_health():
+	return self.stats.health
 
 
-
-
-
-
+func get_speed():
+	return self.stats.movement_speed
 

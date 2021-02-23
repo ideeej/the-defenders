@@ -5,30 +5,26 @@ var parent : KinematicBody2D
 
 var max_health : float
 var health : float
-
+var frame_width : float
+var frame_height : float
 
 func _ready():
 	parent = get_parent()
-	
 
 
 func _process(_delta):
-	update_player_data()
+	self.health = parent.get_health()
+	self.max_health = parent.get_max_health()
 	
-	var animated_sprites = parent.get_node("animated_sprites")
-	var frame_height = animated_sprites.height
-	var frame_width = animated_sprites.width
+	self.frame_width = parent.sprite_width
+	self.frame_height = parent.sprite_height
 	
-	rect_position = Vector2(-frame_width/2, -frame_height*2)
-	max_value = frame_width * 0.8
+	# Offset a bit up
+	self.rect_position = Vector2(-self.frame_width/2, -self.frame_height*2)
+	self.max_value = self.frame_width * 0.8
 	
-	if !health == 0:
-		value = max_value * (health / max_health)
+	if self.health > 0:
+		self.value = self.max_value * (self.health / self.max_health)
 	else:
-		value = 0
-
-
-func update_player_data():
-	health = parent.get_health()
-	max_health = parent.get_max_health()
+		self.value = 0
 

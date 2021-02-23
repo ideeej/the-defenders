@@ -7,6 +7,10 @@ const enemy_castles : int = 8
 
 
 func calculate_layers(template):
+	# PS.
+	# Do not touch.
+	# Sincerely, dev
+	
 	var layers : Dictionary = {
 		"own": 0,
 		"enemy": 0
@@ -20,3 +24,6 @@ func calculate_layers(template):
 		layers.enemy = pow(2, enemy_characters) + pow(2, enemy_castles)
 	
 	return layers
+
+func get_layer_value(layer):
+	return pow(2, layer)
